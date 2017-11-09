@@ -1,30 +1,38 @@
-    var FCM = require('fcm-node')
+    var admin = require('firebase-admin')
     
-    var serverKey = require('testfcm-3859c-firebase-adminsdk-jrx5h-5fd8ed763d.json') //put the generated private key path here    
+    var serverKey = require('./testfcm-3859c-firebase-adminsdk-jrx5h-5fd8ed763d.json') //put the generated private key path here    
     
-    var fcm = new FCM(serverKey)
- 
-    var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
-        to: 'registration_token', 
-        collapse_key: 'your_collapse_key',
-        
-        notification: {
-            title: 'Title of your push notification', 
-            body: 'Body of your push notification' 
-        },
-        
-        data: {  //you can send only notification or only data(or include both)
-            my_key: 'my value',
-            my_another_key: 'my another value'
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: "https://testfcm-3859c.firebaseio.com"
+    });
+    
+    // See the "Managing device groups" link above on how to generate a
+    // notification key.
+    var topic = "highScores";
+    
+    // See the "Defining the message payload" section below for details
+    // on how to define a message payload.
+    var payload = {
+        data: {
+            score: "850",
+            time: "2:45"
         }
-    }
+    };
+    
+    
+    
     exports.handler = (event, context, callback) => {
-
-    fcm.send(message, function(err, response){
-        if (err) {
-            console.log("Something has gone wrong!")
-        } else {
-            console.log("Successfully sent with response: ", response)
-        }
-    })
+        
+        // Send a message to the device group corresponding to the provided
+        // notification key.
+        admin.messaging().sendToDeviceGroup(notificationKey, payload)
+        .then(function(response) {
+            // See the MessagingDeviceGroupResponse reference documentation for
+            // the contents of response.
+            console.log("Successfully sent message:", response);
+        })
+        .catch(function(error) {
+            console.log("Error sending message:", error);
+        });
     };
