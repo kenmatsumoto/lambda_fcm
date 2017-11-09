@@ -1,0 +1,22 @@
+{
+  "name": "lambda_fcm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenmatsumoto/lambda_fcm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kenmatsumoto/lambda_fcm/issues"
+  },
+  "homepage": "https://github.com/kenmatsumoto/lambda_fcm#readme",
+  "dependencies": {
+    "fcm-node": "^1.2.1"
+  }
+}
