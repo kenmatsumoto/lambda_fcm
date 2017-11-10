@@ -1,6 +1,6 @@
     var admin = require('firebase-admin')
     
-    var serverKey = require('./testfcm-3859c-firebase-adminsdk-jrx5h-5fd8ed763d.json') //put the generated private key path here    
+    var serviceAccount = require('./testfcm-3859c-firebase-adminsdk-jrx5h-5fd8ed763d.json') //put the generated private key path here    
     
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
@@ -26,7 +26,7 @@
         
         // Send a message to the device group corresponding to the provided
         // notification key.
-        admin.messaging().sendToDeviceGroup(notificationKey, payload)
+        admin.messaging().sendToTopic(topic, payload)
         .then(function(response) {
             // See the MessagingDeviceGroupResponse reference documentation for
             // the contents of response.
