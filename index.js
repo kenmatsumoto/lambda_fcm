@@ -20,16 +20,19 @@
         }
     };
     
+    var self = this;
     
-    function fcm_send () {
+    function fcm_send (context) {
         return admin.messaging().sendToTopic(topic, payload)
         .then(function(response) {
             // See the MessagingDeviceGroupResponse reference documentation for
             // the contents of response.
             console.log("Successfully sent message:", response.message);
+            context.succeed();
         })
         .catch(function(error) {
             console.log("Error sending message:", error);
+            context.done(error, 'error');
         });
     }
     
@@ -38,20 +41,23 @@
         context.callbackWaitsForEmptyEventLoop = false;
         // Send a message to the device group corresponding to the provided
         // notification key.
-        
+        /*
         admin.messaging().sendToTopic(topic, payload)
         .then(function(response) {
             // See the MessagingDeviceGroupResponse reference documentation for
             // the contents of response.
             console.log("Successfully sent message:", response);
-            callback(null, "some success message" + response);
+            //callback(null, "some success message" + response);
+            context.succeed();
         })
         .catch(function(error) {
             console.log("Error sending message:", error);
-            callback(null, "some error message" + error);
+            //callback(null, "some error message" + error);
+            context.done('error', error);
         });
-        
-        //var message = fcm_send();
-        var message = " ok";
-        callback(null, "some success message" + message);
+        */
+        var message = fcm_send(context);
+        //var message = " ok";
+        console.log("message = " + message);
+        //callback(null, "some success message" + message);
     };

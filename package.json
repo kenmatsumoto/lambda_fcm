@@ -17,6 +17,6 @@
   "homepage": "https://github.com/kenmatsumoto/lambda_fcm#readme",
   "description": "",
   "dependencies": {
-    "firebase-admin": "^5.4.3"
+    "firebase-admin": "^5.5.1"
   }
 }
